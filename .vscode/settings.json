@@ -16,5 +16,8 @@
         "titleBar.inactiveForeground": "#15202b99"
     },
     "peacock.color": "#cf8596",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "cSpell.words": [
+        "Coord"
+    ]
 }
