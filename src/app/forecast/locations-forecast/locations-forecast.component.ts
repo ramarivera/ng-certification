@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { LocationCurrentConditionsViewModel, TemperatureUnit } from '../models';
+import { LocationCurrentConditionViewModel, TemperatureUnit } from '../models';
 
 @Component({
   selector: 'rar-locations-forecast',
@@ -10,7 +10,7 @@ import { LocationCurrentConditionsViewModel, TemperatureUnit } from '../models';
 })
 export class LocationsForecastComponent {
   @Input()
-  public locationsConditions: LocationCurrentConditionsViewModel[];
+  public locationsConditions: LocationCurrentConditionViewModel[];
 
   @Input()
   public temperatureUnit: TemperatureUnit;

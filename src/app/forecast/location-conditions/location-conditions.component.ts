@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { LocationCurrentConditionsViewModel, TemperatureUnit } from '../models';
+import { LocationCurrentConditionViewModel, TemperatureUnit } from '../models';
 
 @Component({
   selector: 'rar-location-conditions',
@@ -9,7 +9,7 @@ import { LocationCurrentConditionsViewModel, TemperatureUnit } from '../models';
 })
 export class LocationConditionsComponent implements OnInit {
   @Input()
-  public currentCondition: LocationCurrentConditionsViewModel;
+  public currentCondition: LocationCurrentConditionViewModel;
 
   @Input()
   public temperatureUnit: TemperatureUnit = 'F';

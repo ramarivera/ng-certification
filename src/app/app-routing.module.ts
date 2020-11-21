@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
-  { path: 'forecast', loadChildren: () => import('./forecast/forecast.module').then((x) => x.ForecastModule) },
+  {
+    path: 'forecast',
+    loadChildren: () =>
+      import('./forecast/forecast.module').then((x) => x.ForecastModule),
+  },
   {
     path: '',
     redirectTo: 'forecast',

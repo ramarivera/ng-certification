@@ -18,6 +18,10 @@
     "peacock.color": "#cf8596",
     "editor.formatOnSave": true,
     "cSpell.words": [
-        "Coord"
+        "Coord",
+        "LOCALSTORAGE",
+        "Webstorage",
+        "ngrx",
+        "uuidv"
     ]
 }

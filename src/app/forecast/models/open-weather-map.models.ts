@@ -53,3 +53,7 @@ interface OpenWeatherMapCurrentWeatherCoord {
   lon: number;
   lat: number;
 }
+
+export enum OpenWeatherMapIcon {
+  Sunny = '01d',
+}

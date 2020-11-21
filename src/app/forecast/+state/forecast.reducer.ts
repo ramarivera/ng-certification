@@ -1,12 +1,19 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import {
+  FiveDaysLocationForecast,
+  LocationCurrentCondition,
+  TemperatureUnit,
+} from '../models';
+import * as forecastActions from './forecast.actions';
 
 export const FORECAST_STATE_FEATURE_NAME = 'forecast';
 
 export interface State {
-  zipCodes: [];
-  forecasts: [];
-  fiveDayForecasts: [];
-  currentTemperatureUnit: 'F' | 'C';
+  zipCodes: string[];
+  conditions: LocationCurrentCondition[];
+  fiveDayForecasts: FiveDaysLocationForecast[];
+  temperatureUnit: TemperatureUnit;
+  selectedLocation: string | null;
 }
 
 export interface ForecastPartialState {
@@ -15,21 +22,47 @@ export interface ForecastPartialState {
 
 export const initialState: State = {
   zipCodes: [],
-  forecasts: [],
+  conditions: [],
   fiveDayForecasts: [],
-  currentTemperatureUnit: 'F',
+  temperatureUnit: 'K',
+  selectedLocation: null,
 };
 
 const forecastReducer = createReducer(
   initialState,
-  on(SuiteNavigationActions.setNavigationTreeSuccess, (state, { tree }) => ({
-    ...state,
-    tree,
-  })),
-  on(SuiteNavigationActions.setNavigationTreeFailure, (state, { error }) => ({
-    ...state,
-    error,
-  }))
+  on(
+    forecastActions.currentConditionRequestSuccess,
+    (state, { currentCondition }) => {
+      const otherConditions = state.conditions.filter(
+        (x) => x.zipCode !== currentCondition.zipCode
+      );
+
+      const newState = {
+        ...state,
+        conditions: [...otherConditions, currentCondition],
+      };
+
+      return newState;
+    }
+  ),
+  on(forecastActions.selectLocation, (state, { zipCode }) => {
+    const newState = { ...state, selectedLocation: zipCode };
+    return newState;
+  }),
+  on(forecastActions.addLocationZipCode, (state, { zipCode }) => {
+    const newState = {
+      ...state,
+      zipCodes: [...state.zipCodes, zipCode],
+    };
+    return newState;
+  }),
+  on(forecastActions.addZipCodesFromLocalStorage, (state, { zipCodes }) => {
+    const newState = {
+      ...state,
+      zipCodes,
+    };
+    return newState;
+  })
 );
 
 export function reducer(state: State | undefined, action: Action) {
