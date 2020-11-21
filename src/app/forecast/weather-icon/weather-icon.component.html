@@ -1,2 +1,6 @@
 <img [src]="weatherIconSrc"
-     class="weather-icon center-block">
+     [ngClass]="{
+          'weather-icon': size === 'normal',
+          'center-block': size === 'normal',
+          'weather-icon--small': size === 'small'
+     }">

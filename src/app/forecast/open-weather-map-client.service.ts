@@ -6,7 +6,10 @@ import {
   OPEN_WEATHER_MAP_APP_ID,
   OPEN_WEATHER_MAP_BASE_URL,
 } from '../app.injection-tokens';
-import { OpenWeatherMapCurrentWeatherResponse } from './models/open-weather-map.model';
+import {
+  OpenWeatherMapCurrentWeatherResponse,
+  OpenWeatherMapFiveDaysForecastResponse,
+} from './models/open-weather-map.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -24,6 +27,14 @@ export class OpenWeatherMapClientService {
   ): Observable<OpenWeatherMapCurrentWeatherResponse> {
     return this.http.get<OpenWeatherMapCurrentWeatherResponse>(
       `${this.openWeatherMapBaseUrl}/weather?zip=${zipCode}&appid=${this.openWeatherMapAppId}`
+    );
+  }
+
+  public getFiveDaysForecastByZipCode(
+    zipCode: string
+  ): Observable<OpenWeatherMapFiveDaysForecastResponse> {
+    return this.http.get<OpenWeatherMapFiveDaysForecastResponse>(
+      `${this.openWeatherMapBaseUrl}/forecast?zip=${zipCode}&appid=${this.openWeatherMapAppId}`
     );
   }
 }

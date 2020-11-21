@@ -39,7 +39,6 @@ export class LocationsForecastPageComponent implements OnInit {
   }
 
   public onLocationFiveDaysForecastClicked(locationZipCode: string) {
-    this.forecastFacade.dispatch(selectLocation({ zipCode: locationZipCode }));
     this.router.navigate(['./', locationZipCode], {
       relativeTo: this.activatedRoute,
     });

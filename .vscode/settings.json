@@ -21,6 +21,7 @@
         "Coord",
         "LOCALSTORAGE",
         "Webstorage",
+        "accum",
         "ngrx",
         "uuidv"
     ]

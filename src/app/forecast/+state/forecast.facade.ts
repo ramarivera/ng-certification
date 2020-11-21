@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ForecastPartialState } from './forecast.reducer';
 import {
   getLocationConditions,
+  getSelectedLocationFiveDaysForecast,
   getTemperatureUnit,
 } from './forecast.selectors';
 
@@ -13,6 +14,9 @@ export class ForecastFacade {
   public readonly temperatureUnit$ = this.store.select(getTemperatureUnit);
   public readonly locationsConditions$ = this.store.select(
     getLocationConditions
+  );
+  public readonly selectedLocationFiveDaysForecast$ = this.store.select(
+    getSelectedLocationFiveDaysForecast
   );
 
   constructor(private store: Store<ForecastPartialState>) {}

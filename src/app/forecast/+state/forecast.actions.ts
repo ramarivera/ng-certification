@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { LocationCurrentCondition } from '../models';
+import { FiveDaysLocationForecast, LocationCurrentCondition } from '../models';
 
 /**
  * Requests current conditions for a given zip code
@@ -38,7 +38,7 @@ export const fiveDaysForecastRequested = createAction(
  */
 export const fiveDaysForecastRequestSuccess = createAction(
   '[Forecasts] five days forecast request success',
-  props<{ currentCondition: LocationCurrentCondition }>()
+  props<{ fiveDaysForecast: FiveDaysLocationForecast }>()
 );
 
 /**

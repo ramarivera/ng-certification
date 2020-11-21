@@ -45,6 +45,21 @@ const forecastReducer = createReducer(
       return newState;
     }
   ),
+  on(
+    forecastActions.fiveDaysForecastRequestSuccess,
+    (state, { fiveDaysForecast }) => {
+      const otherForecasts = state.fiveDayForecasts.filter(
+        (x) => x.zipCode !== fiveDaysForecast.zipCode
+      );
+
+      const newState = {
+        ...state,
+        fiveDayForecasts: [...otherForecasts, fiveDaysForecast],
+      };
+
+      return newState;
+    }
+  ),
   on(forecastActions.selectLocation, (state, { zipCode }) => {
     const newState = { ...state, selectedLocation: zipCode };
     return newState;

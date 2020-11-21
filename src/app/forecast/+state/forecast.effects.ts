@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
+import { Action, createReducer, Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-webstorage';
 import { of } from 'rxjs';
 import {
@@ -13,20 +13,22 @@ import {
   withLatestFrom,
   filter,
 } from 'rxjs/operators';
+import { DialogService } from '../../shared/dialogs/dialog.service';
 import {
   LocalStorageKeys,
   mapOpenWeatherMapResponseToCondition,
+  mapOpenWeatherMapResponseToFiveDaysForecast,
 } from '../models';
 
 import { OpenWeatherMapClientService } from '../open-weather-map-client.service';
 import * as forecastActions from './forecast.actions';
-import { ForecastPartialState } from './forecast.reducer';
 
 @Injectable()
 export class ForecastEffects implements OnInitEffects {
   constructor(
     private localStorageService: LocalStorageService,
     private openWeatherMapClientService: OpenWeatherMapClientService,
+    private dialogService: DialogService,
     private actions$: Actions
   ) {}
 
@@ -36,8 +38,6 @@ export class ForecastEffects implements OnInitEffects {
         forecastActions.currentConditionRequested,
         forecastActions.addZipCodeFromLocalStorage
       ),
-      // withLatestFrom(this.store.select(getZipCodes)),
-      // filter(([action, zipCodes]) => !zipCodes.includes(action.zipCode)),
       concatMap((action) => {
         return this.openWeatherMapClientService
           .getCurrentWeatherByZipCode(action.zipCode)
@@ -62,6 +62,55 @@ export class ForecastEffects implements OnInitEffects {
           );
       })
     )
+  );
+
+  public readonly onFiveDaysForecastRequested$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forecastActions.fiveDaysForecastRequested),
+      concatMap((action) => {
+        return this.openWeatherMapClientService
+          .getFiveDaysForecastByZipCode(action.zipCode)
+          .pipe(
+            map((response) => {
+              const fiveDaysForecast = mapOpenWeatherMapResponseToFiveDaysForecast(
+                action.zipCode,
+                response
+              );
+
+              return forecastActions.fiveDaysForecastRequestSuccess({
+                fiveDaysForecast,
+              });
+            }),
+            catchError((error) =>
+              of(
+                forecastActions.fiveDaysForecastRequestFailure({
+                  error,
+                })
+              )
+            )
+          );
+      })
+    )
+  );
+
+  public readonly onLocationSelected$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forecastActions.selectLocation),
+      map(({ zipCode }) =>
+        forecastActions.fiveDaysForecastRequested({ zipCode })
+      )
+    )
+  );
+
+  public readonly onLocationAddedShowAlert$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(forecastActions.addLocationZipCode),
+        tap(({ zipCode }) => {
+          this.dialogService.showMessage(`Added Zip code ${zipCode}!`);
+        })
+      ),
+    { dispatch: false }
   );
 
   public readonly loadZipCodesFromLocalStorage$ = createEffect(() =>
@@ -145,6 +194,23 @@ export class ForecastEffects implements OnInitEffects {
       map(() => forecastActions.loadZipCodeFromLocalStorage()),
       first()
     )
+  );
+
+  public readonly onAnyError$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(
+          forecastActions.fiveDaysForecastRequestFailure,
+          forecastActions.currentConditionRequestFailure
+        ),
+        tap((action) => {
+          throw action.error;
+          // this.dialogService.showError(
+          //   `An unexpected error ocurred: ${action.error.toString()}`
+          // );
+        })
+      ),
+    { dispatch: false }
   );
 
   ngrxOnInitEffects(): Action {

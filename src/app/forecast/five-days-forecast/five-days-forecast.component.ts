@@ -1,15 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { FiveDaysLocationForecastViewModel, TemperatureUnit } from '../models';
 
 @Component({
   selector: 'rar-five-days-forecast',
   templateUrl: './five-days-forecast.component.html',
-  styleUrls: ['./five-days-forecast.component.css']
+  styleUrls: ['./five-days-forecast.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FiveDaysForecastComponent implements OnInit {
+export class FiveDaysForecastComponent {
+  @Input()
+  public temperatureUnit: TemperatureUnit;
 
-  constructor() { }
+  @Input()
+  public fiveDaysForecast: FiveDaysLocationForecastViewModel;
 
-  ngOnInit(): void {
+  @Output()
+  public backClicked = new EventEmitter();
+
+  constructor() {}
+
+  public onBackButtonClicked() {
+    this.backClicked.emit();
   }
-
 }

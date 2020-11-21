@@ -16,6 +16,9 @@ export class WeatherIconComponent {
   @Input()
   public weather: WeatherType;
 
+  @Input()
+  public size: 'normal' | 'small';
+
   public get weatherIconSrc() {
     return `/assets/weather/${this.weather}.png`;
   }

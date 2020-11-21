@@ -4,16 +4,42 @@ export interface OpenWeatherMapCurrentWeatherResponse {
   coord: OpenWeatherMapCurrentWeatherCoord;
   weather: OpenWeatherMapCurrentWeatherWeather[];
   base: string;
-  main: OpenWeatherMapCurrentWeatherMain;
+  main: OpenWeatherMapMain;
   visibility: number;
-  wind: OpenWeatherMapCurrentWeatherWind;
-  clouds: OpenWeatherMapCurrentWeatherClouds;
   dt: number;
   sys: OpenWeatherCurrentWeatherSystem;
   timezone: number;
   id: number;
   name: string;
   cod: number;
+}
+
+export interface OpenWeatherMapFiveDaysForecastResponse {
+  cod: string;
+  message: number;
+  cnt: number;
+  list: OpenWeatherMapSingleDayForecast[];
+  city: OpenWeatherMapFiveDaysForecastCity;
+}
+
+interface OpenWeatherMapFiveDaysForecastCity {
+  name: string;
+  coord: OpenWeatherMapCurrentWeatherCoord;
+  country: string;
+}
+
+export interface OpenWeatherMapSingleDayForecast {
+  dt: number;
+  main: OpenWeatherMapMain;
+  weather: OpenWeatherMapSingleDayWeatherForecast[];
+  dt_txt: string;
+}
+
+interface OpenWeatherMapSingleDayWeatherForecast {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
 }
 
 interface OpenWeatherCurrentWeatherSystem {
@@ -24,16 +50,7 @@ interface OpenWeatherCurrentWeatherSystem {
   sunset: number;
 }
 
-interface OpenWeatherMapCurrentWeatherClouds {
-  all: number;
-}
-
-interface OpenWeatherMapCurrentWeatherWind {
-  speed: number;
-  deg: number;
-}
-
-interface OpenWeatherMapCurrentWeatherMain {
+interface OpenWeatherMapMain {
   temp: number;
   feels_like: number;
   temp_min: number;
@@ -52,8 +69,4 @@ interface OpenWeatherMapCurrentWeatherWeather {
 interface OpenWeatherMapCurrentWeatherCoord {
   lon: number;
   lat: number;
-}
-
-export enum OpenWeatherMapIcon {
-  Sunny = '01d',
 }

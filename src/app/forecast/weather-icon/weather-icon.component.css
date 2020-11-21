@@ -3,3 +3,9 @@
     width: 150px;
 }
 
+
+.weather-icon--small {
+    height: 25px;
+    width: 25px;
+}
+

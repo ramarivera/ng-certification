@@ -1,9 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { WINDOW } from '../../app.injection-tokens';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DialogService {
+  constructor(@Inject(WINDOW) private window: Window) {}
 
-  constructor() { }
+  public showMessage(message: string) {
+    this.window.alert(message);
+  }
+
+  public showError(errorMessage: string) {
+    this.window.alert(errorMessage);
+  }
 }

@@ -5,7 +5,7 @@ import { LocationsForecastPageComponent } from './locations-forecast-page/locati
 
 const forecastRoutes: Routes = [
   { path: '', component: LocationsForecastPageComponent },
-  { path: ':id', component: FiveDaysForecastPageComponent },
+  { path: ':zipCode', component: FiveDaysForecastPageComponent },
 ];
 
 @NgModule({

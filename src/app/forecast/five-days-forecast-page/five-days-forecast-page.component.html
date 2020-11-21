@@ -1,1 +1,16 @@
-<rar-five-days-forecast></rar-five-days-forecast>>
+<ng-container *ngIf="{
+    temperatureUnit: temperatureUnit$ | async,
+    fiveDaysForecast: selectedLocationFiveDaysForecast$ | async
+} as data;">
+    <div *ngIf="!data.fiveDaysForecast; else forecastTemplate"
+         class="well">
+        Loading forecast...
+    </div>
+
+    <ng-template #forecastTemplate>
+        <rar-five-days-forecast [temperatureUnit]="data.temperatureUnit"
+                                [fiveDaysForecast]="data.fiveDaysForecast"
+                                (backClicked)="onBackClicked()">
+        </rar-five-days-forecast>
+    </ng-template>
+</ng-container>
