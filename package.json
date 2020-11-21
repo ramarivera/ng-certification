@@ -13,6 +13,7 @@
     "@angular/router": "^9.1.9",
     "@ngrx/effects": "9",
     "@ngrx/store": "9",
+    "@ngrx/store-devtools": "9",
     "bootstrap": "^3.4.1",
     "core-js": "^3.6.5",
     "ngx-webstorage": "5",

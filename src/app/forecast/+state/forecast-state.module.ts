@@ -13,9 +13,7 @@ import { ForecastFacade } from './forecast.facade';
   declarations: [],
   imports: [
     CommonModule,
-    StoreModule.forFeature('forecast', {
-      [FORECAST_STATE_FEATURE_NAME]: forecastReducer,
-    }),
+    StoreModule.forFeature(FORECAST_STATE_FEATURE_NAME, forecastReducer),
     EffectsModule.forFeature([ForecastEffects]),
   ],
   providers: [ForecastFacade],

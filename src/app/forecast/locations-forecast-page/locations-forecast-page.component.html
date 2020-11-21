@@ -1,3 +1,4 @@
-<p>
-  locations-forecast-page works!
-</p>
+<rar-locations-forecast [temperatureUnit]="temperatureUnit$ | async"
+                        [locationsConditions]="locationsConditions$ | async"
+                        (locationAdded)="onLocationAdded($event)">
+</rar-locations-forecast>

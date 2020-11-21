@@ -6,7 +6,7 @@ import {
   OPEN_WEATHER_MAP_APP_ID,
   OPEN_WEATHER_MAP_BASE_URL,
 } from '../app.injection-tokens';
-import { OpenWeatherMapCurrentWeatherResponse } from './models/open-weather-map.models';
+import { OpenWeatherMapCurrentWeatherResponse } from './models/open-weather-map.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

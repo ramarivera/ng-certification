@@ -57,11 +57,13 @@ const forecastReducer = createReducer(
     return newState;
   }),
   on(forecastActions.addZipCodesFromLocalStorage, (state, { zipCodes }) => {
-    const newState = {
+    if (!zipCodes) {
+      return state;
+    }
+    return {
       ...state,
       zipCodes,
     };
-    return newState;
   })
 );
 

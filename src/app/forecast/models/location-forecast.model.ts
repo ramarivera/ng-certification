@@ -1,4 +1,6 @@
+import { OpenWeatherMapCurrentWeatherResponse } from './open-weather-map.model';
 import { Temperature } from './temperature.model';
+import { convertIconIdToWeatherName, WeatherType } from './weather.model';
 
 export interface LocationCurrentCondition {
   locationName: string;
@@ -15,33 +17,6 @@ export interface LocationCurrentConditionViewModel
   weather: WeatherType;
 }
 
-export type WeatherType = 'sunny' | 'clouds' | 'rain' | 'snow';
-
-const weatherIconsToWeather: { [key: string]: WeatherType } = {
-  '01d': 'sunny',
-  '01n': 'sunny',
-  '02d': 'clouds',
-  '02n': 'clouds',
-  '03d': 'clouds',
-  '03n': 'clouds',
-  '04d': 'clouds',
-  '04n': 'clouds',
-  '09d': 'rain',
-  '09n': 'rain',
-  '10d': 'rain',
-  '10n': 'rain',
-  '11d': 'rain',
-  '11n': 'rain',
-  '13d': 'snow',
-  '13n': 'snow',
-  '50d': 'clouds',
-  '50n': 'clouds',
-};
-// https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
-export function convertIconIdToWeatherName(iconId: string): WeatherType {
-  return weatherIconsToWeather[iconId];
-}
-
 export function mapConditionToConditionViewModel(
   condition: LocationCurrentCondition
 ): LocationCurrentConditionViewModel {
@@ -50,6 +25,36 @@ export function mapConditionToConditionViewModel(
     weather: convertIconIdToWeatherName(condition.iconId),
   };
   return conditionViewModel;
+}
+
+export function mapOpenWeatherMapResponseToCondition(
+  zipCode: string,
+  response: OpenWeatherMapCurrentWeatherResponse
+): LocationCurrentCondition {
+  if (!response.weather[0]) {
+    throw new Error('Received response is invalid');
+  }
+
+  const locationCondition: LocationCurrentCondition = {
+    locationName: response.name,
+    zipCode,
+    condition: response.weather[0].main,
+    iconId: response.weather[0].icon,
+    currentTemp: {
+      unit: 'K',
+      value: response.main.temp,
+    },
+    maxTemp: {
+      unit: 'K',
+      value: response.main.temp_max,
+    },
+    minTemp: {
+      unit: 'K',
+      value: response.main.temp_min,
+    },
+  };
+
+  return locationCondition;
 }
 
 export class LocalStorageKeys {

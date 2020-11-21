@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { navigatedToLocationsForecastPage } from '../+state/forecast.actions';
+import {
+  navigatedToLocationsForecastPage,
+  addLocationZipCode,
+} from '../+state/forecast.actions';
 import { ForecastFacade } from '../+state/forecast.facade';
 
 @Component({
@@ -16,5 +19,11 @@ export class LocationsForecastPageComponent implements OnInit {
 
   ngOnInit() {
     this.forecastFacade.dispatch(navigatedToLocationsForecastPage());
+  }
+
+  public onLocationAdded(locationZipCode: string) {
+    this.forecastFacade.dispatch(
+      addLocationZipCode({ zipCode: locationZipCode })
+    );
   }
 }

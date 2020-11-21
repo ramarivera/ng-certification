@@ -54,7 +54,7 @@ export const fiveDaysForecastRequestFailure = createAction(
  */
 export const addLocationZipCode = createAction(
   '[Forecasts] add location zip code',
-  props<{ zipCode: string }>()
+  props<{ zipCode: string; eventId?: string }>()
 );
 
 /**
@@ -79,4 +79,8 @@ export const navigatedToLocationsForecastPage = createAction(
 export const selectLocation = createAction(
   '[Forecasts] select location',
   props<{ zipCode: string }>()
+);
+
+export const initializedForecastFeature = createAction(
+  '[Forecasts] initialized forecast feature'
 );

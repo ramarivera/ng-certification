@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import {
-  convertIconIdToWeatherName,
   LocationCurrentConditionViewModel,
   mapConditionToConditionViewModel,
 } from '../models';
