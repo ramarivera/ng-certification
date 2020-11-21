@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { WeatherType } from '../models';
 
 @Component({
   selector: 'rar-weather-icon',
@@ -8,7 +14,11 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 })
 export class WeatherIconComponent {
   @Input()
-  public weatherName: string;
+  public weather: WeatherType;
+
+  public get weatherIconSrc() {
+    return `/assets/weather/${this.weather}.png`;
+  }
 
   constructor() {}
 }

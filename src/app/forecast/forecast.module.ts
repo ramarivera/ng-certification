@@ -10,12 +10,20 @@ import { LocationsForecastComponent } from './locations-forecast/locations-forec
 import { ForecastStateModule } from './+state/forecast-state.module';
 import { OpenWeatherMapClientService } from './open-weather-map-client.service';
 import { ForecastRoutingModule } from './forecast-routing.module';
+import { TemperaturePipe } from './temperature.pipe';
+import { WeatherIconComponent } from './weather-icon/weather-icon.component';
+import { FiveDaysForecastComponent } from './five-days-forecast/five-days-forecast.component';
+import { FiveDaysForecastPageComponent } from './five-days-forecast-page/five-days-forecast-page.component';
 
 @NgModule({
   declarations: [
     LocationsForecastPageComponent,
     LocationConditionsComponent,
     LocationsForecastComponent,
+    WeatherIconComponent,
+    TemperaturePipe,
+    FiveDaysForecastComponent,
+    FiveDaysForecastPageComponent,
   ],
   imports: [
     CommonModule,

@@ -15,11 +15,17 @@
     </div>
 
     <div>
-        <div class="well flex">
-            <rar-location-conditions *ngFor="let locationCurrentCondition of locationsConditions"
-                                     [temperatureUnit]="temperatureUnit"
-                                     [currentCondition]="locationCurrentCondition">
-            </rar-location-conditions>
+        <div class="well">
+            <div class="row">
+                <rar-location-conditions class="col-md-6"
+                                         *ngFor="let locationCurrentCondition of locationsConditions"
+                                         [temperatureUnit]="temperatureUnit"
+                                         [currentCondition]="locationCurrentCondition"
+                                         (closeClicked)="onLocationCloseClicked(locationCurrentCondition)"
+                                         (fiveDaysForecastClicked)="onLocationFiveDaysForecastClicked(locationCurrentCondition)">
+                </rar-location-conditions>
+            </div>
+
         </div>
     </div>
 </div>

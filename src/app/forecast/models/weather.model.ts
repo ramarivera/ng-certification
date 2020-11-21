@@ -1,8 +1,8 @@
-export type WeatherType = 'sunny' | 'clouds' | 'rain' | 'snow';
+export type WeatherType = 'sun' | 'clouds' | 'rain' | 'snow';
 
 const weatherIconsToWeather: { [key: string]: WeatherType } = {
-  '01d': 'sunny',
-  '01n': 'sunny',
+  '01d': 'sun',
+  '01n': 'sun',
   '02d': 'clouds',
   '02n': 'clouds',
   '03d': 'clouds',

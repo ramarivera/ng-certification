@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   navigatedToLocationsForecastPage,
   addLocationZipCode,
+  removeLocation,
+  selectLocation,
 } from '../+state/forecast.actions';
 import { ForecastFacade } from '../+state/forecast.facade';
 
@@ -15,7 +18,11 @@ export class LocationsForecastPageComponent implements OnInit {
   public readonly locationsConditions$ = this.forecastFacade
     .locationsConditions$;
 
-  constructor(private forecastFacade: ForecastFacade) {}
+  constructor(
+    private forecastFacade: ForecastFacade,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.forecastFacade.dispatch(navigatedToLocationsForecastPage());
@@ -25,5 +32,16 @@ export class LocationsForecastPageComponent implements OnInit {
     this.forecastFacade.dispatch(
       addLocationZipCode({ zipCode: locationZipCode })
     );
+  }
+
+  public onLocationClosedClicked(locationZipCode: string) {
+    this.forecastFacade.dispatch(removeLocation({ zipCode: locationZipCode }));
+  }
+
+  public onLocationFiveDaysForecastClicked(locationZipCode: string) {
+    this.forecastFacade.dispatch(selectLocation({ zipCode: locationZipCode }));
+    this.router.navigate(['./', locationZipCode], {
+      relativeTo: this.activatedRoute,
+    });
   }
 }

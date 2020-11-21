@@ -14,7 +14,7 @@ const getForecastFeatureState = createFeatureSelector<
   State
 >(FORECAST_STATE_FEATURE_NAME);
 
-const getZipCodes = createSelector(
+export const getZipCodes = createSelector(
   getForecastFeatureState,
   (state) => state.zipCodes
 );

@@ -18,13 +18,6 @@ export class ForecastFacade {
   constructor(private store: Store<ForecastPartialState>) {}
 
   public dispatch(action: Action) {
-    const eventId = uuidv4();
-    if (!(action as any).eventId) {
-      (action as any).eventId = eventId;
-    }
-
     this.store.dispatch(action);
-
-    return eventId;
   }
 }

@@ -6,7 +6,7 @@ import { LocationCurrentCondition } from '../models';
  */
 export const currentConditionRequested = createAction(
   '[Forecasts] current condition requested',
-  props<{ zipCode: string; eventId: string }>()
+  props<{ zipCode: string }>()
 );
 
 /**
@@ -14,7 +14,7 @@ export const currentConditionRequested = createAction(
  */
 export const currentConditionRequestSuccess = createAction(
   '[Forecasts] current condition request success',
-  props<{ currentCondition: LocationCurrentCondition; eventId: string }>()
+  props<{ currentCondition: LocationCurrentCondition }>()
 );
 
 /**
@@ -22,7 +22,7 @@ export const currentConditionRequestSuccess = createAction(
  */
 export const currentConditionRequestFailure = createAction(
   '[Forecasts] current condition request failure',
-  props<{ error: any; eventId: string }>()
+  props<{ error: any }>()
 );
 
 /**
@@ -30,7 +30,7 @@ export const currentConditionRequestFailure = createAction(
  */
 export const fiveDaysForecastRequested = createAction(
   '[Forecasts] five days forecast requested',
-  props<{ zipCode: string; eventId: string }>()
+  props<{ zipCode: string }>()
 );
 
 /**
@@ -38,7 +38,7 @@ export const fiveDaysForecastRequested = createAction(
  */
 export const fiveDaysForecastRequestSuccess = createAction(
   '[Forecasts] five days forecast request success',
-  props<{ currentCondition: LocationCurrentCondition; eventId: string }>()
+  props<{ currentCondition: LocationCurrentCondition }>()
 );
 
 /**
@@ -46,7 +46,7 @@ export const fiveDaysForecastRequestSuccess = createAction(
  */
 export const fiveDaysForecastRequestFailure = createAction(
   '[Forecasts] five days forecast request failure',
-  props<{ error: any; eventId: string }>()
+  props<{ error: any }>()
 );
 
 /**
@@ -54,22 +54,30 @@ export const fiveDaysForecastRequestFailure = createAction(
  */
 export const addLocationZipCode = createAction(
   '[Forecasts] add location zip code',
-  props<{ zipCode: string; eventId?: string }>()
+  props<{ zipCode: string }>()
+);
+
+/**
+ * Removes a location
+ */
+export const removeLocation = createAction(
+  '[Forecasts] remove location',
+  props<{ zipCode: string }>()
 );
 
 /**
  * Requests loading of zip codes from local storage
  */
-export const loadZipCodesFromLocalStorage = createAction(
+export const loadZipCodeFromLocalStorage = createAction(
   '[Forecasts] load zip codes from local storage'
 );
 
 /**
- * Adds zip codes loaded from local storage
+ * Adds zip code loaded from local storage
  */
-export const addZipCodesFromLocalStorage = createAction(
+export const addZipCodeFromLocalStorage = createAction(
   '[Forecasts] add zip codes from local storage',
-  props<{ zipCodes: string[] }>()
+  props<{ zipCode: string }>()
 );
 
 export const navigatedToLocationsForecastPage = createAction(

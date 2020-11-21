@@ -24,7 +24,7 @@ export const initialState: State = {
   zipCodes: [],
   conditions: [],
   fiveDayForecasts: [],
-  temperatureUnit: 'K',
+  temperatureUnit: 'F',
   selectedLocation: null,
 };
 
@@ -49,21 +49,33 @@ const forecastReducer = createReducer(
     const newState = { ...state, selectedLocation: zipCode };
     return newState;
   }),
-  on(forecastActions.addLocationZipCode, (state, { zipCode }) => {
+  on(
+    forecastActions.addLocationZipCode,
+    forecastActions.addZipCodeFromLocalStorage,
+    (state, { zipCode }) => {
+      const zipCodes = state.zipCodes.filter((x) => x !== zipCode);
+
+      const newState = {
+        ...state,
+        zipCodes: [...zipCodes, zipCode],
+      };
+      return newState;
+    }
+  ),
+  on(forecastActions.removeLocation, (state, { zipCode }) => {
+    const zipCodes = state.zipCodes.filter((x) => x !== zipCode);
+    const conditions = state.conditions.filter((x) => x.zipCode !== zipCode);
+    const fiveDayForecasts = state.fiveDayForecasts.filter(
+      (x) => x.zipCode !== zipCode
+    );
+
     const newState = {
       ...state,
-      zipCodes: [...state.zipCodes, zipCode],
+      zipCodes,
+      conditions,
+      fiveDayForecasts,
     };
     return newState;
-  }),
-  on(forecastActions.addZipCodesFromLocalStorage, (state, { zipCodes }) => {
-    if (!zipCodes) {
-      return state;
-    }
-    return {
-      ...state,
-      zipCodes,
-    };
   })
 );
 

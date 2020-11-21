@@ -1,23 +1,28 @@
-<div>
-  <div class="well flex">
-    <div>
-      <h3>{{ currentCondition.locationName }} ({{ currentCondition.zipCode }})</h3>
-      <h4>Current conditions: {{ currentCondition.condition }}</h4>
-      <h4>Temperatures today:</h4>
-      <p>
-        Current {{ currentCondition.currentTemp | temperature: temperatureUnit }}
-        - Max {{ currentCondition.maxTemp | temperature: temperatureUnit }}
-        - Min {{ currentCondition.minTemp | temperature: temperatureUnit }}
-      </p>
-      <p>
-        <button type="button" (click)="onFiveDaysForecastClicked()">
-          Show 5-day forecast for {{ currentCondition.locationName }}
-        </button>
-      </p>
+<div class="well">
+    <div class="row">
+        <div class="col-md-7">
+            <div>
+                <h3>{{ currentCondition.locationName }} ({{ currentCondition.zipCode }})</h3>
+                <h4>Current conditions: {{ currentCondition.condition }}</h4>
+                <h4>Temperatures today:</h4>
+                <p>
+                    Current {{ currentCondition.currentTemp | temperature: temperatureUnit }} <br />
+                    - Max {{ currentCondition.maxTemp | temperature: temperatureUnit }} <br />
+                    - Min {{ currentCondition.minTemp | temperature: temperatureUnit }} <br />
+                </p>
+                <p>
+                    <button type="button"
+                            class="btn btn-accent"
+                            (click)="onFiveDaysForecastClicked()">
+                        Show 5-day forecast for {{ currentCondition.locationName }}
+                    </button>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-5 weather-icon--centered">
+            <span class="close"
+                  (click)="onCloseClicked()">×</span>
+            <rar-weather-icon [weather]="currentCondition.weather"> </rar-weather-icon>
+        </div>
     </div>
-    <div>
-      <span class="close">×</span>
-      <rar-weather-icon [weatherName]="currentCondition.weatherName"> </rar-weather-icon>
-    </div>
-  </div>
 </div>

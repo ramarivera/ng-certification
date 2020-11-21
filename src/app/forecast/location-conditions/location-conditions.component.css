@@ -1,0 +1,5 @@
+.weather-icon--centered {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
