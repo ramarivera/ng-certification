@@ -3,11 +3,14 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { LocationCurrentConditionViewModel, TemperatureUnit } from '../models';
+import { notIncludedIn } from '../../shared/validation';
 
 @Component({
   selector: 'rar-locations-forecast',
@@ -15,7 +18,7 @@ import { LocationCurrentConditionViewModel, TemperatureUnit } from '../models';
   styleUrls: ['./locations-forecast.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocationsForecastComponent {
+export class LocationsForecastComponent implements OnInit, OnChanges {
   @Input()
   public locationsConditions: LocationCurrentConditionViewModel[];
 
@@ -23,45 +26,64 @@ export class LocationsForecastComponent {
   public temperatureUnit: TemperatureUnit;
 
   @Input()
-  public existingLocations: string[] = [];
+  public existentLocations: string[] = [];
 
   @Output()
-  public locationAdded = new EventEmitter<string>();
+  public addLocation = new EventEmitter<string>();
 
   @Output()
-  public locationClosedClicked = new EventEmitter<string>();
+  public closeLocation = new EventEmitter<string>();
 
   @Output()
-  public locationFiveDaysForecastClicked = new EventEmitter<string>();
+  public fiveDaysForecastClick = new EventEmitter<string>();
 
-  public locationZipCodeFormControl = new FormControl('', {
-    validators: [
-      Validators.required,
-      Validators.pattern(/^\d{5}(?:[-\s]\d{4})?$/),
-    ],
-    updateOn: 'blur',
-  });
+  public zipCode: FormControl;
+
+  private zipCodeDefaultValidators = [
+    Validators.required,
+    Validators.pattern(/^\d{5}(?:[-\s]\d{4})?$/),
+  ];
 
   constructor() {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.existingLocations?.isFirstChange()) {
+      this.zipCode.setValidators([
+        ...this.zipCodeDefaultValidators,
+        notIncludedIn(this.existentLocations),
+      ]);
+      this.zipCode.updateValueAndValidity();
+    }
+  }
+
+  ngOnInit(): void {
+    this.zipCode = new FormControl('', {
+      validators: [
+        ...this.zipCodeDefaultValidators,
+        notIncludedIn(this.existentLocations),
+      ],
+      updateOn: 'blur',
+    });
+  }
+
   public onAddLocationClicked() {
-    if (!this.locationZipCodeFormControl.valid) {
+    if (!this.zipCode.valid) {
       return;
     }
 
-    this.locationAdded.emit(this.locationZipCodeFormControl.value);
-    this.locationZipCodeFormControl.reset();
+    this.addLocation.emit(this.zipCode.value);
+    this.zipCode.reset();
   }
 
   public onLocationFiveDaysForecastClicked(
     locationCondition: LocationCurrentConditionViewModel
   ) {
-    this.locationFiveDaysForecastClicked.emit(locationCondition.zipCode);
+    this.fiveDaysForecastClick.emit(locationCondition.zipCode);
   }
 
   public onLocationCloseClicked(
     locationCondition: LocationCurrentConditionViewModel
   ) {
-    this.locationClosedClicked.emit(locationCondition.zipCode);
+    this.closeLocation.emit(locationCondition.zipCode);
   }
 }

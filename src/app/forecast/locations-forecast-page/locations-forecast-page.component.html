@@ -1,6 +1,7 @@
 <rar-locations-forecast [temperatureUnit]="temperatureUnit$ | async"
                         [locationsConditions]="locationsConditions$ | async"
-                        (locationAdded)="onLocationAdded($event)"
-                        (locationClosedClicked)="onLocationClosedClicked($event)"
-                        (locationFiveDaysForecastClicked)="onLocationFiveDaysForecastClicked($event)">
+                        [existentLocations]="existentLocations$ | async"
+                        (addLocation)="onLocationAdded($event)"
+                        (closeLocation)="onLocationClosedClicked($event)"
+                        (fiveDaysForecastClick)="onLocationFiveDaysForecastClicked($event)">
 </rar-locations-forecast>

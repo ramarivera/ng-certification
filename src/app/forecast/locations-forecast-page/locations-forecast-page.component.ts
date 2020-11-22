@@ -17,6 +17,7 @@ export class LocationsForecastPageComponent implements OnInit {
   public readonly temperatureUnit$ = this.forecastFacade.temperatureUnit$;
   public readonly locationsConditions$ = this.forecastFacade
     .locationsConditions$;
+  public readonly existentLocations$ = this.forecastFacade.locationZipCodes$;
 
   constructor(
     private forecastFacade: ForecastFacade,

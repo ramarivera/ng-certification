@@ -6,6 +6,7 @@ import {
   getLocationConditions,
   getSelectedLocationFiveDaysForecast,
   getTemperatureUnit,
+  getZipCodes,
 } from './forecast.selectors';
 
 @Injectable()
@@ -17,6 +18,7 @@ export class ForecastFacade {
   public readonly selectedLocationFiveDaysForecast$ = this.store.select(
     getSelectedLocationFiveDaysForecast
   );
+  public readonly locationZipCodes$ = this.store.select(getZipCodes);
 
   constructor(private store: Store<ForecastPartialState>) {}
 
