@@ -18,7 +18,6 @@ export class AlertDialogComponent extends BaseDialogComponent {
     @Inject(DIALOG_DATA) private dialogData: AlertData
   ) {
     super(dialogRef);
-    console.log('OPENING ALERT!');
   }
 
   onCloseClicked() {
