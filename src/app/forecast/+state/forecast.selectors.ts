@@ -22,7 +22,7 @@ export const getZipCodes = createSelector(
   (state) => state.zipCodes
 );
 
-const getConditions = createSelector(
+export const getConditions = createSelector(
   getForecastFeatureState,
   (state) => state.conditions
 );

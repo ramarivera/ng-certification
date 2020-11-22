@@ -18,7 +18,7 @@ import { notIncludedIn } from '../../shared/validation';
   styleUrls: ['./locations-forecast.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LocationsForecastComponent implements OnInit, OnChanges {
+export class LocationsForecastComponent implements OnChanges {
   @Input()
   public locationsConditions: LocationCurrentConditionViewModel[];
 
@@ -37,33 +37,22 @@ export class LocationsForecastComponent implements OnInit, OnChanges {
   @Output()
   public fiveDaysForecastClick = new EventEmitter<string>();
 
-  public zipCode: FormControl;
-
   private zipCodeDefaultValidators = [
     Validators.required,
     Validators.pattern(/^\d{5}(?:[-\s]\d{4})?$/),
   ];
 
+  public zipCode: FormControl = new FormControl('', {
+    validators: [...this.zipCodeDefaultValidators],
+    updateOn: 'blur',
+  });
+
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.existingLocations?.isFirstChange()) {
-      this.zipCode.setValidators([
-        ...this.zipCodeDefaultValidators,
-        notIncludedIn(this.existentLocations),
-      ]);
-      this.zipCode.updateValueAndValidity();
+    if (changes.existingLocations) {
+      this.updateZipCodeValidators();
     }
-  }
-
-  ngOnInit(): void {
-    this.zipCode = new FormControl('', {
-      validators: [
-        ...this.zipCodeDefaultValidators,
-        notIncludedIn(this.existentLocations),
-      ],
-      updateOn: 'blur',
-    });
   }
 
   public onAddLocationClicked() {
@@ -85,5 +74,13 @@ export class LocationsForecastComponent implements OnInit, OnChanges {
     locationCondition: LocationCurrentConditionViewModel
   ) {
     this.closeLocation.emit(locationCondition.zipCode);
+  }
+
+  private updateZipCodeValidators() {
+    this.zipCode.setValidators([
+      ...this.zipCodeDefaultValidators,
+      notIncludedIn(this.existentLocations),
+    ]);
+    this.zipCode.updateValueAndValidity();
   }
 }

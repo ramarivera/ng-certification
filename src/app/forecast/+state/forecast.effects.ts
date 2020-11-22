@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { Action, createReducer, Store } from '@ngrx/store';
+import { Action, createReducer, State, Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-webstorage';
 import { of } from 'rxjs';
 import {
@@ -22,6 +22,8 @@ import {
 
 import { OpenWeatherMapClientService } from '../open-weather-map-client.service';
 import * as forecastActions from './forecast.actions';
+import { ForecastPartialState } from './forecast.reducer';
+import { getConditions } from './forecast.selectors';
 
 @Injectable()
 export class ForecastEffects implements OnInitEffects {
@@ -29,7 +31,8 @@ export class ForecastEffects implements OnInitEffects {
     private localStorageService: LocalStorageService,
     private openWeatherMapClientService: OpenWeatherMapClientService,
     private alertService: AlertService,
-    private actions$: Actions
+    private actions$: Actions,
+    private store: Store<ForecastPartialState>
   ) {}
 
   public readonly onCurrentConditionRequested$ = createEffect(() =>
@@ -106,7 +109,16 @@ export class ForecastEffects implements OnInitEffects {
     () =>
       this.actions$.pipe(
         ofType(forecastActions.addLocationZipCode),
-        tap(({ zipCode }) => {
+        concatMap(({ zipCode }) =>
+          this.store.select(getConditions).pipe(
+            filter(
+              (conditions) =>
+                conditions.find((x) => x.zipCode === zipCode) != null
+            ),
+            map((_) => zipCode)
+          )
+        ),
+        tap((zipCode) => {
           this.alertService.displayAlert(
             `Added zip code ${zipCode}!`,
             'New zip code'
@@ -208,7 +220,7 @@ export class ForecastEffects implements OnInitEffects {
         ),
         tap((action) => {
           this.alertService.displayAlert(
-            `An unexpected error ocurred: ${action.error.toString()}`,
+            `An unexpected error ocurred: ${action.error.message}`,
             'ERROR!'
           );
         })

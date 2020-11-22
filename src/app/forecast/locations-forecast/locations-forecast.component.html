@@ -4,7 +4,7 @@
         <h2>Enter a zipcode: </h2>
 
 
-        <div class="form-group" [ngClass]="{'has-error': zipCode.invalid }">
+        <div class="form-group" [ngClass]="{'has-error': zipCode.invalid && zipCode.dirty }">
             <input type="text" class="form-control" id="zipCodeInput" placeholder="Zip code"
                 [formControl]="zipCode">
 
