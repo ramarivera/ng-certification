@@ -1,11 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
-// tslint:disable-next-line:no-submodule-imports
 import { HttpClient } from '@angular/common/http';
 
 import {
   OPEN_WEATHER_MAP_APP_ID,
   OPEN_WEATHER_MAP_BASE_URL,
-} from '../app.injection-tokens';
+} from '../app.tokens';
 import {
   OpenWeatherMapCurrentWeatherResponse,
   OpenWeatherMapFiveDaysForecastResponse,

@@ -10,8 +10,14 @@ import { AppRoutingModule } from './app-routing.module';
 import {
   OPEN_WEATHER_MAP_APP_ID,
   OPEN_WEATHER_MAP_BASE_URL,
-} from './app.injection-tokens';
+} from './app.tokens';
 import { environment } from '../environments/environment';
+import { SharedModule } from './shared/shared.module';
+import {
+  FullscreenOverlayContainer,
+  OverlayContainer,
+  OverlayModule,
+} from '@angular/cdk/overlay';
 
 @NgModule({
   imports: [
@@ -20,10 +26,13 @@ import { environment } from '../environments/environment';
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({}),
     NgxWebstorageModule.forRoot(),
+    OverlayModule,
+    SharedModule,
     AppRoutingModule,
   ],
   declarations: [AppComponent],
   providers: [
+    // { provide: OverlayContainer, useClass: FullscreenOverlayContainer },
     {
       provide: OPEN_WEATHER_MAP_APP_ID,
       useValue: environment.openWeatherMapAppId,

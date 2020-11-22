@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
-import { v4 as uuidv4 } from 'uuid';
 
 import { ForecastPartialState } from './forecast.reducer';
 import {

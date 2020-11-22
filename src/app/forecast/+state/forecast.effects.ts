@@ -13,7 +13,7 @@ import {
   withLatestFrom,
   filter,
 } from 'rxjs/operators';
-import { DialogService } from '../../shared/dialogs/dialog.service';
+import { AlertService } from '../../shared/alert/alert.service';
 import {
   LocalStorageKeys,
   mapOpenWeatherMapResponseToCondition,
@@ -28,7 +28,7 @@ export class ForecastEffects implements OnInitEffects {
   constructor(
     private localStorageService: LocalStorageService,
     private openWeatherMapClientService: OpenWeatherMapClientService,
-    private dialogService: DialogService,
+    private alertService: AlertService,
     private actions$: Actions
   ) {}
 
@@ -107,7 +107,10 @@ export class ForecastEffects implements OnInitEffects {
       this.actions$.pipe(
         ofType(forecastActions.addLocationZipCode),
         tap(({ zipCode }) => {
-          this.dialogService.showMessage(`Added Zip code ${zipCode}!`);
+          this.alertService.displayAlert(
+            `Added zip code ${zipCode}!`,
+            'New zip code'
+          );
         })
       ),
     { dispatch: false }
@@ -204,10 +207,10 @@ export class ForecastEffects implements OnInitEffects {
           forecastActions.currentConditionRequestFailure
         ),
         tap((action) => {
-          throw action.error;
-          // this.dialogService.showError(
-          //   `An unexpected error ocurred: ${action.error.toString()}`
-          // );
+          this.alertService.displayAlert(
+            `An unexpected error ocurred: ${action.error.toString()}`,
+            'ERROR!'
+          );
         })
       ),
     { dispatch: false }
