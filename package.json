@@ -30,7 +30,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "ci:build": "ng build --prod --base-href /ng-certification/"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.0",
