@@ -7,5 +7,5 @@ export interface AngularEnvironment {
 export const environment: AngularEnvironment = {
   production: true,
   openWeatherMapAppId: '5a4b2d457ecbef9eb2a71e480b947604',
-  openWeatherMapBaseUrl: '',
+  openWeatherMapBaseUrl: 'http://api.openweathermap.org/data/2.5',
 };
