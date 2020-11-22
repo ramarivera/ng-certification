@@ -2,14 +2,29 @@
 
     <div class="well">
         <h2>Enter a zipcode: </h2>
-        <input class="form-control"
-               placeholder="zip code"
-               type="text"
-               id="locationInput"
-               [formControl]="locationZipCodeFormControl">
-        <br>
-        <button class="btn btn-primary"
-                (click)="onAddLocationClicked()">
+
+
+        <div class="form-group" [ngClass]="{'has-error': locationZipCodeFormControl.invalid }">
+            <input type="text" class="form-control" id="zipCodeInput" placeholder="Zip code"
+                [formControl]="locationZipCodeFormControl">
+
+            <ng-container *ngIf="locationZipCodeFormControl.dirty">
+                <span class="help-block" *ngIf=" locationZipCodeFormControl.errors.required">
+                    Please enter a zip code.
+                </span>
+                <span class="help-block" *ngIf="locationZipCodeFormControl.errors.pattern">
+                    The zip code is invalid (we accept 5 and 9 digits zip codes, with or without dashes).
+                </span>
+                <span class="help-block" *ngIf="locationZipCodeFormControl.errors.existingZipCode">
+                    A location with this zip code has already been added.
+                </span>
+            </ng-container>
+
+        </div>
+
+
+        <button class="btn btn-primary" (click)="onAddLocationClicked()"
+            [disabled]="locationZipCodeFormControl.invalid">
             Add location
         </button>
     </div>
@@ -17,12 +32,10 @@
     <div>
         <div class="well">
             <div class="row">
-                <rar-location-conditions class="col-md-6"
-                                         *ngFor="let locationCurrentCondition of locationsConditions"
-                                         [temperatureUnit]="temperatureUnit"
-                                         [currentCondition]="locationCurrentCondition"
-                                         (closeClicked)="onLocationCloseClicked(locationCurrentCondition)"
-                                         (fiveDaysForecastClicked)="onLocationFiveDaysForecastClicked(locationCurrentCondition)">
+                <rar-location-conditions class="col-md-6" *ngFor="let locationCurrentCondition of locationsConditions"
+                    [temperatureUnit]="temperatureUnit" [currentCondition]="locationCurrentCondition"
+                    (closeClicked)="onLocationCloseClicked(locationCurrentCondition)"
+                    (fiveDaysForecastClicked)="onLocationFiveDaysForecastClicked(locationCurrentCondition)">
                 </rar-location-conditions>
             </div>
 

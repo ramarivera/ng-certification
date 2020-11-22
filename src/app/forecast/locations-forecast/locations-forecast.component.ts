@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { LocationCurrentConditionViewModel, TemperatureUnit } from '../models';
 
 @Component({
@@ -22,6 +22,9 @@ export class LocationsForecastComponent {
   @Input()
   public temperatureUnit: TemperatureUnit;
 
+  @Input()
+  public existingLocations: string[] = [];
+
   @Output()
   public locationAdded = new EventEmitter<string>();
 
@@ -31,18 +34,22 @@ export class LocationsForecastComponent {
   @Output()
   public locationFiveDaysForecastClicked = new EventEmitter<string>();
 
-  public locationZipCodeFormControl = new FormControl('');
+  public locationZipCodeFormControl = new FormControl('', {
+    validators: [
+      Validators.required,
+      Validators.pattern(/^\d{5}(?:[-\s]\d{4})?$/),
+    ],
+    updateOn: 'blur',
+  });
 
   constructor() {}
 
   public onAddLocationClicked() {
-    const locationZipCode = this.locationZipCodeFormControl.value;
-
-    if (!locationZipCode) {
+    if (!this.locationZipCodeFormControl.valid) {
       return;
     }
 
-    this.locationAdded.emit(locationZipCode);
+    this.locationAdded.emit(this.locationZipCodeFormControl.value);
     this.locationZipCodeFormControl.reset();
   }
 
