@@ -12,6 +12,7 @@ import {
   concatMap,
   withLatestFrom,
   filter,
+  take,
 } from 'rxjs/operators';
 import { AlertService } from '../../shared/alert/alert.service';
 import {
@@ -116,15 +117,15 @@ export class ForecastEffects implements OnInitEffects {
               (conditions) =>
                 conditions.find((x) => x.zipCode === zipCode) != null
             ),
-            map((_) => zipCode)
+            take(1),
+            tap(() => {
+              this.alertService.displayAlert(
+                `Added zip code ${zipCode}!`,
+                'New zip code'
+              );
+            })
           )
-        ),
-        tap((zipCode) => {
-          this.alertService.displayAlert(
-            `Added zip code ${zipCode}!`,
-            'New zip code'
-          );
-        })
+        )
       ),
     { dispatch: false }
   );
