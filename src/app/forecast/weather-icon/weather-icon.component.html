@@ -1,13 +1,6 @@
-<div [ngSwitch]="weather" [ngClass]="{
-     'weather-icon': size === 'normal',
-     'center-block': size === 'normal',
-     'weather-icon--small': size === 'small'
-}">
-
-     <img *ngSwitchCase="'sun'" src="./assets/weather/sun.png" >
-     <img *ngSwitchCase="'rain'" src="./assets/weather/rain.png" >
-     <img *ngSwitchCase="'clouds'" src="./assets/weather/clouds.png" >
-     <img *ngSwitchCase="'snow'" src="./assets/weather/snow.png" >
-
-     <span *ngSwitchDefault> invalid icon </span>
-</div>
+<img [src]="weatherIconSrc"
+     [ngClass]="{
+          'weather-icon': size === 'normal',
+          'center-block': size === 'normal',
+          'weather-icon--small': size === 'small'
+     }">

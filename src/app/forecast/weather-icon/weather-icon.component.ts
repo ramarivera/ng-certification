@@ -19,5 +19,9 @@ export class WeatherIconComponent {
   @Input()
   public size: 'normal' | 'small';
 
+  public get weatherIconSrc() {
+    return `https://www.angulartraining.com/images/weather/${this.weather}.png`;
+  }
+
   constructor() {}
 }
