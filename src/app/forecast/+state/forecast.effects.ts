@@ -59,7 +59,7 @@ export class ForecastEffects implements OnInitEffects {
               of(
                 forecastActions.currentConditionRequestFailure({
                   error,
-                  zipCode,
+                  zipCode: action.zipCode,
                 })
               )
             )
