@@ -44,13 +44,13 @@ export class LocationsForecastComponent implements OnChanges {
 
   public zipCode: FormControl = new FormControl('', {
     validators: [...this.zipCodeDefaultValidators],
-    updateOn: 'blur',
+    updateOn: 'change',
   });
 
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.existingLocations) {
+    if (changes.existentLocations) {
       this.updateZipCodeValidators();
     }
   }

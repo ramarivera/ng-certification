@@ -3,19 +3,18 @@
     <div class="well">
         <h2>Enter a zipcode: </h2>
 
-
         <div class="form-group" [ngClass]="{'has-error': zipCode.invalid && zipCode.dirty }">
-            <input type="text" class="form-control" id="zipCodeInput" placeholder="Zip code"
+            <input type="text" class="form-control" id="zipCodeInput" placeholder="Zip code" 
                 [formControl]="zipCode">
 
             <ng-container *ngIf="zipCode.dirty">
-                <span class="help-block" *ngIf=" zipCode.errors.required">
+                <span class="help-block" *ngIf="zipCode.hasError('required')">
                     Please enter a zip code.
                 </span>
-                <span class="help-block" *ngIf="zipCode.errors.pattern">
+                <span class="help-block" *ngIf="zipCode.hasError('pattern')">
                     The zip code is invalid (we accept 5 and 9 digits zip codes, with or without dashes).
                 </span>
-                <span class="help-block" *ngIf="zipCode.errors.notIncludedIn">
+                <span class="help-block" *ngIf="zipCode.hasError('notIncludedIn')">
                     A location with this zip code has already been added.
                 </span>
             </ng-container>
