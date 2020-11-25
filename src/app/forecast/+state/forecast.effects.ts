@@ -59,6 +59,7 @@ export class ForecastEffects implements OnInitEffects {
               of(
                 forecastActions.currentConditionRequestFailure({
                   error,
+                  zipCode,
                 })
               )
             )
@@ -226,6 +227,13 @@ export class ForecastEffects implements OnInitEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  public readonly onCurrentConditionRequestFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forecastActions.currentConditionRequestFailure),
+      map(({ zipCode }) => forecastActions.removeLocation({ zipCode }))
+    )
   );
 
   ngrxOnInitEffects(): Action {

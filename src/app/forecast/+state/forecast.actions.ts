@@ -22,7 +22,7 @@ export const currentConditionRequestSuccess = createAction(
  */
 export const currentConditionRequestFailure = createAction(
   '[Forecasts] current condition request failure',
-  props<{ error: any }>()
+  props<{ error: any; zipCode: string }>()
 );
 
 /**
